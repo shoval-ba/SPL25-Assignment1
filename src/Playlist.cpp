@@ -15,10 +15,9 @@ Playlist::~Playlist()
 
 #endif
     PlaylistNode *current = head;
-    PlaylistNode *next_node = nullptr;
-    while (current != nullptr)
+    while (current)
     {
-        next_node = current->next;
+        PlaylistNode *next_node = current->next;
         if (current->track != nullptr)
         {
             delete current->track;
@@ -73,13 +72,14 @@ void Playlist::remove_track(const std::string &title)
         {
             head = current->next;
         }
-        if (current->track != nullptr)
+
+        if (current->track)
         {
-            delete current->track; 
+            delete current->track;
             current->track = nullptr;
         }
-
         delete current;
+
         track_count--;
         std::cout << "Removed '" << title << "' from playlist" << std::endl;
     }
