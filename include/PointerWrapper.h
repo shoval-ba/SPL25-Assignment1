@@ -3,6 +3,7 @@
 
 #include <utility>
 #include <iostream>
+#include <stdexcept>
 
 /**
  * PointerWrapper - A template class that wraps a raw pointer
@@ -111,6 +112,10 @@ public:
      */
     T *operator->() const
     {
+        if (ptr == nullptr)
+        {
+            throw std::runtime_error("Attempting to dereference a null PointerWrapper.");
+        }
         return ptr;
     }
 
