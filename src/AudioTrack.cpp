@@ -47,6 +47,7 @@ AudioTrack::AudioTrack(const AudioTrack &other)
       artists(other.artists),
       duration_seconds(other.duration_seconds),
       bpm(other.bpm),
+      waveform_data(nullptr),
       waveform_size(other.waveform_size)
 {
 // TODO: Implement the copy constructor
@@ -54,7 +55,7 @@ AudioTrack::AudioTrack(const AudioTrack &other)
     std::cout << "AudioTrack copy constructor called for: " << other.title << std::endl;
 #endif
     waveform_data = new double[waveform_size];
-    for (int i = 0; i < waveform_size; i++)
+    for (size_t i = 0; i < waveform_size; i++)
     {
         waveform_data[i] = other.waveform_data[i];
     }
@@ -78,7 +79,7 @@ AudioTrack &AudioTrack::operator=(const AudioTrack &other)
     bpm = other.bpm;
     waveform_size = other.waveform_size;
     waveform_data = new double[waveform_size];
-    for (int i = 0; i < waveform_size; i++)
+    for (size_t i = 0; i < waveform_size; i++)
     {
         waveform_data[i] = other.waveform_data[i];
     }
@@ -91,9 +92,8 @@ AudioTrack::AudioTrack(AudioTrack &&other) noexcept
       artists(std::move(other.artists)),
       duration_seconds(other.duration_seconds),
       bpm(other.bpm),
-      waveform_size(other.waveform_size),
-      waveform_data(other.waveform_data)
-
+      waveform_data(other.waveform_data),
+      waveform_size(other.waveform_size)
 {
 // TODO: Implement the move constructor
 #ifdef DEBUG
@@ -133,7 +133,7 @@ void AudioTrack::get_waveform_copy(double *buffer, size_t buffer_size) const
 {
     if (buffer && waveform_data && buffer_size <= waveform_size)
     {
-        for (int i = 0; i < waveform_size; i++)
+        for (size_t i = 0; i < waveform_size; i++)
         {
             buffer[i] = waveform_data[i];
         }

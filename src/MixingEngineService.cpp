@@ -78,7 +78,7 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack &track)
     decks[index] = cloned_track.release();
     std::cout << "[Load Complete] '" << decks[index]->get_title() << "' is now loaded on deck " << index << std::endl;
 
-    if (decks[active_deck] != nullptr && active_deck != index)
+    if (decks[active_deck] != nullptr && active_deck != static_cast<size_t>(index))
     {
         std::cout << "[Unload] Unloading previous deck " << active_deck << " (" << decks[active_deck]->get_title() << ")" << std::endl;
         delete decks[active_deck];
