@@ -9,7 +9,7 @@ MP3Track::MP3Track(const std::string &title, const std::vector<std::string> &art
     : AudioTrack(title, artists, duration, bpm), bitrate(bitrate), has_id3_tags(has_tags)
 {
 
-    std::cout << "MP3Track created: " << bitrate << " kbps" << std::endl;
+    // std::cout << "MP3Track created: " << bitrate << " kbps" << std::endl;
 }
 
 // ========== TODO: STUDENTS IMPLEMENT THESE VIRTUAL FUNCTIONS ==========
@@ -22,14 +22,14 @@ void MP3Track::load()
     // NOTE: Use exactly 2 spaces before the arrow (→) character
     if (has_id3_tags)
     {
-        std::cout << "  -> Processing ID3 metadata (artist info, album art, etc.)..." << std::endl;
+        std::cout << "  → Processing ID3 metadata (artist info, album art, etc.)..." << std::endl;
     }
     else
     {
-        std::cout << "  -> No ID3 tags found." << std::endl;
+        std::cout << "  → No ID3 tags found." << std::endl;
     }
-    std::cout << "  -> Decoding MP3 frames..." << std::endl;
-    std::cout << "  -> Load complete." << std::endl;
+    std::cout << "  → Decoding MP3 frames..." << std::endl;
+    std::cout << "  → Load complete." << std::endl;
 }
 
 void MP3Track::analyze_beatgrid()
@@ -39,8 +39,8 @@ void MP3Track::analyze_beatgrid()
     // NOTE: Use exactly 2 spaces before each arrow (→) character
     double beats_estimated = (duration_seconds / 60.0) * bpm;
     double precision_factor = bitrate / 320.0;
-    std::cout << "  -> Estimated beats: " << beats_estimated
-              << " -> Compression precision factor: " << precision_factor << std::endl;
+    std::cout << "  → Estimated beats: " << beats_estimated
+              << " → Compression precision factor: " << precision_factor << std::endl;
 }
 
 double MP3Track::get_quality_score() const

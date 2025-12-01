@@ -111,6 +111,7 @@ AudioTrack *DJLibraryService::findTrack(const std::string &track_title)
 void DJLibraryService::loadPlaylistFromIndices(const std::string &playlist_name,
                                                const std::vector<int> &track_indices)
 {
+    std::cout << "[System] Loading playlist: " << playlist_name << std::endl;
     std::cout << "[INFO] Loading playlist: " << playlist_name << std::endl;
     playlist = Playlist(playlist_name);
 

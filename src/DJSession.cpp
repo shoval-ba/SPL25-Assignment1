@@ -82,7 +82,7 @@ int DJSession::load_track_to_controller(const std::string &track_name)
         stats.errors++;
         return 0;
     }
-    std::cout << "[System] Loading track: " << track_name << " to controller..." << std::endl;
+    std::cout << "[System] Loading track: '" << track_name << "' to controller..." << std::endl;
     int num = controller_service.loadTrackToCache(*track);
     if (num == 1)
         stats.cache_hits++;
@@ -104,6 +104,7 @@ int DJSession::load_track_to_controller(const std::string &track_name)
  */
 bool DJSession::load_track_to_mixer_deck(const std::string &track_title)
 {
+    controller_service.displayCacheStatus();
     std::cout << "[System] Delegating track transfer to MixingEngineService for: " << track_title << std::endl;
     AudioTrack *track = controller_service.getTrackFromCache(track_title);
     if (track == nullptr)
@@ -205,7 +206,7 @@ void DJSession::simulate_dj_performance()
         }
         print_session_summary();
 
-        stats = SessionStats();
+        // stats = SessionStats();
     }
     std::cout << "Session cancelled by user or all playlists played." << std::endl;
 }

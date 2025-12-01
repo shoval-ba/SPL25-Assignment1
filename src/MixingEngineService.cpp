@@ -7,7 +7,7 @@
  * TODO: Implement MixingEngineService constructor
  */
 MixingEngineService::MixingEngineService()
-     : decks(), active_deck(1), auto_sync(false), bpm_tolerance(0)
+    : decks(), active_deck(1), auto_sync(false), bpm_tolerance(0)
 {
     decks[0] = nullptr;
     decks[1] = nullptr;
@@ -19,7 +19,7 @@ MixingEngineService::MixingEngineService()
  */
 MixingEngineService::~MixingEngineService()
 {
-    std::cout << "[MixingEngineService] Cleaning up decks.... " << std::endl;
+    std::cout << "[MixingEngineService] Cleaning up decks..." << std::endl;
 
     if (decks[0] != nullptr)
     {
@@ -66,26 +66,39 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack &track)
 
     cloned_track->load();
     cloned_track->analyze_beatgrid();
-
-    if (decks[active_deck] != nullptr && auto_sync)
+    if (auto_sync)
     {
-        if (!can_mix_tracks(cloned_track))
+        if (decks[active_deck] != nullptr && auto_sync)
         {
-            sync_bpm(cloned_track);
+            if (!can_mix_tracks(cloned_track))
+            {
+                sync_bpm(cloned_track);
+            }
+        }
+        else
+        {
+            std::cout << "[Sync BPM] Cannot sync - one of the decks is empty." << std::endl;
         }
     }
 
     decks[index] = cloned_track.release();
     std::cout << "[Load Complete] '" << decks[index]->get_title() << "' is now loaded on deck " << index << std::endl;
 
-    if (decks[active_deck] != nullptr && active_deck != static_cast<size_t>(index))
-    {
-        std::cout << "[Unload] Unloading previous deck " << active_deck << " (" << decks[active_deck]->get_title() << ")" << std::endl;
-        delete decks[active_deck];
-        decks[active_deck] = nullptr;
-    }
+    // if (decks[active_deck] != nullptr && active_deck != static_cast<size_t>(index))
+    // {
+    //     // std::cout << "[Unload] Unloading previous deck " << active_deck << " (" << decks[active_deck]->get_title() << ")" << std::endl;
+    //     delete decks[active_deck];
+    //     decks[active_deck] = nullptr;
+    // }
     active_deck = index;
+    // std::cout << "[Active Deck] Switched to deck " << index << std::endl;
+    // std::cout << "\n=== Deck Status ===" << std::endl;
+    // std::cout << "Deck 0: " << (decks[0] ? decks[0]->get_title() : "[EMPTY]") << std::endl;
+    // std::cout << "Deck 1: " << (decks[1] ? decks[1]->get_title() : "[EMPTY]") << std::endl;
+    // std::cout << "Active Deck: " << active_deck << std::endl;
+    // std::cout << "===================" << std::endl;
     std::cout << "[Active Deck] Switched to deck " << index << std::endl;
+    displayDeckStatus();
     return index;
 }
 
